@@ -317,9 +317,9 @@
     <fieldset>\
         <legend>STM32</legend>\
         <form action=\"/flash\" method=\"post\" enctype=\"multipart/form-data\">\
-            <input type=\"text\" name=\"description\" value=\"some text\">\
+            .hex firmware file :\
             <input type=\"file\" name=\"myFile\">\
-            <button type=\"submit\">Submit</button>\
+            <button type=\"submit\">Flash</button>\
         </form>\
     </fieldset>\
     <div class=\"credits\">\
