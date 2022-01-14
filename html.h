@@ -84,6 +84,9 @@
             margin-top: 10px;\
             height: 120px;\
         }\
+        .setleveldata {\
+            color: black;\
+        }\
         .imgcredits {\
             border: 1px solid lightgrey;\
         }\
@@ -175,40 +178,55 @@
     <script>\
         function setdownofflevel() {\
             let setofflevel = document.getElementById('setofflevel');\
-            if (setofflevel.innerText != '...')\
-            if (parseInt(setofflevel.innerText)-2 > setonlevel.innerText) setofflevel.innerText--;\
-            if (parseInt(setofflevel.innerText)-2 == setonlevel.innerText && setonlevel.innerText > 0) {\
-              setofflevel.innerText--;\
-              setonlevel.innerText--;\
+            let setonlevel = document.getElementById('setonlevel');\
+            if (setofflevel.innerText != '...') {\
+                if (parseInt(setofflevel.innerText)-2 > setonlevel.innerText) setofflevel.innerText--;\
+                if (parseInt(setofflevel.innerText)-2 == setonlevel.innerText && setonlevel.innerText > 0) {\
+                    setofflevel.innerText--;\
+                    setonlevel.innerText--;\
+                }\
+                setonlevel.style.color = \"green\"; \
+                setofflevel.style.color = \"green\"; \
             }\
         }\
         function setupofflevel() {\
             let setofflevel = document.getElementById('setofflevel');\
-            if (setofflevel.innerText != '...')\
-            if (setofflevel.innerText < 40)\
-            setofflevel.innerText++;\
+            let setonlevel = document.getElementById('setonlevel');\
+            if (setofflevel.innerText != '...') {\
+                if (setofflevel.innerText < 40)\
+                setofflevel.innerText++;\
+                setonlevel.style.color = \"green\"; \
+                setofflevel.style.color = \"green\"; \
+            }\
         }\
         function setdownonlevel() {\
+            let setofflevel = document.getElementById('setofflevel');\
             let setonlevel = document.getElementById('setonlevel');\
-            if (setonlevel.innerText != '...')\
-            if (setonlevel.innerText > 0)\
-            setonlevel.innerText--;\
+            if (setonlevel.innerText != '...') {\
+                if (setonlevel.innerText > 0)\
+                setonlevel.innerText--;\
+                setonlevel.style.color = \"green\"; \
+                setofflevel.style.color = \"green\"; \
+            }\
         }\
         function setuponlevel() {\
             let setofflevel = document.getElementById('setofflevel');\
             let setonlevel = document.getElementById('setonlevel');\
-            if (setonlevel.innerText != '...')\
-            if (parseInt(setonlevel.innerText)+2 < setofflevel.innerText) setonlevel.innerText++;\
-            if (parseInt(setonlevel.innerText)+2 == setofflevel.innerText && setofflevel.innerText < 40) {\
-              setofflevel.innerText++;\
-              setonlevel.innerText++;\
+            if (setonlevel.innerText != '...') {\
+                if (parseInt(setonlevel.innerText)+2 < setofflevel.innerText) setonlevel.innerText++;\
+                if (parseInt(setonlevel.innerText)+2 == setofflevel.innerText && setofflevel.innerText < 40) {\
+                    setofflevel.innerText++;\
+                    setonlevel.innerText++;\
+                }\
+                setonlevel.style.color = \"green\"; \
+                setofflevel.style.color = \"green\"; \
             }\
         }\
         function hello0() {\
             getcurrentlevel();\
             getledstate();\
-            if (document.getElementById(\"setonlevel\").innerText == \"...\") getonlevel();\
-            if (document.getElementById(\"setofflevel\").innerText == \"...\") getofflevel();\
+            if (document.getElementById(\"setonlevel\").style.color != \"green\") getonlevel();\
+            if (document.getElementById(\"setofflevel\").style.color != \"green\") getofflevel();\
         }\
         function getcurrentlevel() {\
             $.ajax({  \
@@ -226,7 +244,7 @@
                 url: \"/onlightlevel\",\
                 cache: false,\
                 success: function(html){  \
-                    $(\"#setonlevel\").html(html);  \
+                    if (document.getElementById(\"setonlevel\").style.color != \"green\") $(\"#setonlevel\").html(html);  \
                 }\
             });  \
         }\
@@ -236,7 +254,7 @@
                 url: \"/offlightlevel\",\
                 cache: false,\
                 success: function(html){  \
-                    $(\"#setofflevel\").html(html);  \
+                    if (document.getElementById(\"setofflevel\").style.color != \"green\") $(\"#setofflevel\").html(html);  \
                 }\
             });  \
         }\
@@ -260,13 +278,15 @@
             });  \
         }\
         function setlightlevels() {\
-            if ((document.getElementById(\"setonlevel\").innerText >= 0) & (document.getElementById(\"setofflevel\").innerText >= 0)) {\
-            $.ajax({  \
-                type : \"POST\",\
-                url: \"/setlevels?\"+document.getElementById(\"setonlevel\").innerText+\"?\"+document.getElementById(\"setofflevel\").innerText+\"?\",\
-                cache: false,\
-            });  }\
-            else alert(\"error\");\
+            if ((document.getElementById(\"setonlevel\").innerText >= 0) && (document.getElementById(\"setofflevel\").innerText >= 0)) {\
+                document.getElementById(\"setofflevel\").style.color = \"black\"; \
+                document.getElementById(\"setonlevel\").style.color = \"black\"; \
+                $.ajax({  \
+                    type : \"POST\",\
+                    url: \"/setlevels?\"+document.getElementById(\"setonlevel\").innerText+\"?\"+document.getElementById(\"setofflevel\").innerText+\"?\",\
+                    cache: false,\
+                });\
+            } else alert(\"error\");\
         }\
         $(document).ready(function() {\
             hello0();\
